@@ -10,8 +10,13 @@ const connectDB = require("./Database/dbConnection");
 connectDB();
 const PORT = 5000;
 
+
+// middleware
+app.use(express.json());
+
+
 // routes
-app.use("/user", userRoutes);
+app.use("/api/user", userRoutes);
 
 app.listen(5000, () => {
   console.log("server listening on port 5000");
