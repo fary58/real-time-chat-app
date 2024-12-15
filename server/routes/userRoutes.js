@@ -53,15 +53,13 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/delete", async (req, res) => {
-    console.log(req);
-
-//   try {
-//     await User.findByIdAndDelete(req.params.id);
-//     res.json({ msg: "User Deleted Successfully" });
-//   } catch (err) {
-//     return res.status(500).json({ msg: err.message });
-//   }
+router.delete("/:user_id", async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.user.id);
+    res.json({ msg: "User Deleted Successfully" });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
 });
 
 module.exports = router;
