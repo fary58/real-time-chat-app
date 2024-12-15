@@ -53,6 +53,39 @@ router.post("/register", async (req, res) => {
   }
 });
 
+//Login
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password)
+      return res
+        .status(400)
+        .json({ message: "All fields are required", success: false });
+
+    const user = await User.findOne({ email });
+
+    if (!user)
+      return res
+        .status(401)
+        .json({ message: "Incorrect email or password", success: false });
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch)
+      return res
+        .status(401)
+        .json({ message: "Incorrect email or password", success: false });
+
+    return res
+      .status(200)
+      .json({
+        message: `${user.fullname} logged in successfully.`,
+        user,
+        success: true,
+      });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.delete("/:user_id", async (req, res) => {
   try {
     await User.findByIdAndDelete(req.user.id);
