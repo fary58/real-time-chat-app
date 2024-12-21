@@ -55,8 +55,10 @@ router.post("/register", async (req, res) => {
 
 //Login
 router.post("/login", async (req, res) => {
+  console.log(req.body);
   try {
     const { email, password } = req.body;
+    
     if (!email || !password)
       return res
         .status(400)
@@ -75,7 +77,7 @@ router.post("/login", async (req, res) => {
         .json({ message: "Incorrect email or password", success: false });
 
     return res.status(200).json({
-      message: `${user.fullname} logged in successfully.`,
+      message: `${user.name} logged in successfully.`,
       user,
       success: true,
     });
